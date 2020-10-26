@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+KEEPDB=cuts_to_keep
+REMOTE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files
+files="puzzledb.json cutdb.json cuts"
+
+check() {
+  if [[ ! -f $KEEPDB ]] ; then
+    echo "Crée un fichier '$KEEPDB' qui contient, pour chaque cut que tu veux garder, une ligne contenant le début de son id."
+    exit -1
+  fi
+}
+
+pull() {
+  for file in $files ; do
+    adb pull $REMOTE_PATH/$file cache/
+  done
+}
+
+push() {
+  adb shell rm -r $REMOTE_PATH/cuts/*
+
+  for file in $files ; do
+    adb push cache/$file $REMOTE_PATH
+  done
+}
+
+getallcuts() {
+(
+  jq ".puzzleInfos[] .cutId" cache/puzzledb.json ;
+  jq ".cutInfos[] .id" cache/cutdb.json ;
+  find cache/cuts/ -name '*.json' -printf "%p\n" | cut -d. -f 1 | cut -d/ -f 3
+  ) | \
+    sed 's/"//g' | \
+    sort | \
+    uniq
+}
+
+remove() {
+  jq "del (.puzzleInfos[] | select(.cutId | test(\"^$1\")))" cache/puzzledb.json > puzzledb.json.updated && mv puzzledb.json.updated cache/puzzledb.json
+  jq "del (.cutInfos[] | select(.id | test(\"^$1\")))" cache/cutdb.json > cutdb.json.updated && mv cutdb.json.updated cache/cutdb.json
+  rm -f cache/cuts/$1*.json
+}
+
+whatshallIdowith() {
+  result="drop"
+  for pattern in $(cat $KEEPDB) ; do
+    if  echo $1 | grep "^${pattern}" > /dev/null ; then
+      result="keep"
+    fi
+  done
+  echo -n $result
+}
+
+check
+
+pull
+echo "$(getallcuts | wc -l) cuts found"
+for cutid in $(getallcuts) ; do
+  if [[ "$(whatshallIdowith $cutid)" == "drop" ]] ; then
+    echo "Dropping $cutid …"
+    remove $cutid
+  fi
+done
+echo "$(getallcuts | wc -l) cuts left"
+
+echo "Shall I push [y/N] ?"
+read answer
+if [[ "$answer" == "y" ]] ; then
+  push
+fi
