@@ -76,8 +76,13 @@ getallcuts() {
 }
 
 remove() {
-  jq "del (.puzzleInfos[] | select(.cutId | test(\"^$1\")))" cache/puzzledb.json > puzzledb.json.updated && mv puzzledb.json.updated cache/puzzledb.json
-  jq "del (.cutInfos[] | select(.id | test(\"^$1\")))" cache/cutdb.json > cutdb.json.updated && mv cutdb.json.updated cache/cutdb.json
+  prefix=$1
+  if [[ $(lookup $prefix) == none ]] ; then
+    echo "Found no cut with prefix ${prefix}."
+    exit -1
+  fi
+  jq --arg prefix $prefix 'del (.puzzleInfos[] | select(.cutId | test("^"+$prefix)))' cache/puzzledb.json > puzzledb.json.updated && mv puzzledb.json.updated cache/puzzledb.json
+  jq --arg prefix $prefix 'del (.cutInfos[] | select(.id | test("^"+$prefix)))' cache/cutdb.json > cutdb.json.updated && mv cutdb.json.updated cache/cutdb.json
   rm -f cache/cuts/$1*.json
 }
 
@@ -94,7 +99,7 @@ whatshallIdowith() {
 export_() {
   prefix=$1
   if [[ $(lookup $prefix) != unique ]] ; then
-    echo "Can't find a single cut with ${prefix} ($(lookup $prefix))"
+    echo "Can't find a single cut with prefix ${prefix} ($(lookup $prefix))"
     exit -1
   fi
   modelId="$(jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json )"
@@ -151,6 +156,9 @@ case "$1" in
     ;;
   lookup)
     lookup $2
+    ;;
+  remove)
+    remove $2
     ;;
   *)
     usage
