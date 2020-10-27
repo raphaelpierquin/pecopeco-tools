@@ -1,0 +1,117 @@
+#!/bin/bash -e
+
+KEEPDB=cuts_to_keep
+REMOTE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files
+files="puzzledb.json cutdb.json cuts"
+
+usage() {
+  name=$(basename $0)
+  echo "usage : ${name} [clean|import|export|pull|push] [arg]"
+  echo "        ${name} clean : keep only cuts listed in $KEEPDB"
+  echo "        ${name} export <cutid>: export cut to a package"
+  echo "        ${name} import <package.json>: import cut from a package "
+  echo "        ${name} push: upload database to headset "
+  echo "        ${name} pull: download database from headset "
+}
+
+clean_check() {
+  if [[ ! -f $KEEPDB ]] ; then
+    echo "List every cuts you want to keep in file '$KEEPDB'"
+    exit -1
+  fi
+}
+
+pull() {
+  for file in $files ; do
+    adb pull $REMOTE_PATH/$file cache/
+  done
+}
+
+push() {
+  adb shell rm -r $REMOTE_PATH/cuts/*
+
+  for file in $files ; do
+    adb push cache/$file $REMOTE_PATH
+  done
+}
+
+getallcuts() {
+(
+  jq ".puzzleInfos[] .cutId" cache/puzzledb.json ;
+  jq ".cutInfos[] .id" cache/cutdb.json ;
+  find cache/cuts/ -name '*.json' -printf "%p\n" | cut -d. -f 1 | cut -d/ -f 3
+  ) | \
+    sed 's/"//g' | \
+    sort | \
+    uniq
+}
+
+remove() {
+  jq "del (.puzzleInfos[] | select(.cutId | test(\"^$1\")))" cache/puzzledb.json > puzzledb.json.updated && mv puzzledb.json.updated cache/puzzledb.json
+  jq "del (.cutInfos[] | select(.id | test(\"^$1\")))" cache/cutdb.json > cutdb.json.updated && mv cutdb.json.updated cache/cutdb.json
+  rm -f cache/cuts/$1*.json
+}
+
+whatshallIdowith() {
+  result="drop"
+  for pattern in $(cat $KEEPDB) ; do
+    if  echo $1 | grep "^${pattern}" > /dev/null ; then
+      result="keep"
+    fi
+  done
+  echo -n $result
+}
+
+_export() {
+  prefix=$1
+  modelId="$(jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json )"
+  packagefile="${modelId}-${prefix}.json"
+  query='{ puzzleInfo: .[0].puzzleInfos[] | select(.cutId | test("^"+$prefix)) , cutInfo: .[1].cutInfos[] | select(.id | test("^"+$prefix)), slicers: .[2].slicers }'
+  jq -s --arg prefix $prefix "$query" cache/puzzledb.json cache/cutdb.json cache/cuts/${prefix}*.json > $packagefile
+  echo "Extracted $packagefile"
+}
+
+import () {
+  set -x
+  packagefile=$1
+  id=$(jq -r '.cutInfo .id' $packagefile)
+  cutfile=cache/cuts/$id.json
+  if [[ ! -f $cutfile ]] ; then
+    jq '{slicers: .slicers}' $packagefile > $cutfile
+    jq -s --arg id $id '.[0].puzzleInfos += [.[1].puzzleInfo] | .[0]' cache/puzzledb.json $packagefile > newpuzzledb.json && mv newpuzzledb.json cache/puzzledb.json
+    jq -s --arg id $id '.[0].cutInfos += [.[1].cutInfo] | .[0]' cache/cutdb.json $packagefile > newcutdb.json && mv newcutdb.json cache/cutdb.json
+  fi
+  echo "Imported $packagefile"
+}
+
+clean() {
+  echo "$(getallcuts | wc -l) cuts found"
+  for cutid in $(getallcuts) ; do
+    if [[ "$(whatshallIdowith $cutid)" == "drop" ]] ; then
+      echo "Dropping $cutid …"
+      remove $cutid
+    fi
+  done
+  echo "$(getallcuts | wc -l) cuts left"
+}
+
+case "$1" in
+  pull)
+    pull
+    ;;
+  push)
+    push
+    ;;
+  clean)
+    clean_check
+    clean
+    ;;
+  import)
+    import $2
+    ;;
+  export)
+    _export $2
+    ;;
+  *)
+    usage
+esac
