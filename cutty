@@ -16,14 +16,11 @@ usage() {
   echo "        ${name} list: list all cuts"
 }
 
-_getid() {
-  prefix=$1
-  jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .cutId ' cache/puzzledb.json
-}
 
-_getmodelid() {
+_get_cut_info() {
   prefix=$1
-  jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json
+  info=$2
+  jq -r --arg prefix $prefix --arg info $info '.cutInfos[] | select(.id | test("^"+$prefix)) | .[$info] ' cache/cutdb.json
 }
 
 lookup() {
@@ -52,7 +49,17 @@ lookup() {
 
 list() {
   for cutid in $(getallcuts) ; do
-    echo "$cutid ($(_getmodelid $cutid))"
+    name=$(_get_cut_info $cutid name )
+    model=$(_get_cut_info $cutid modelId )
+    shortid="${cutid::7}…"
+    flag=$(whatshallIdowith $cutid)
+    flag=${flag::1}
+    printf -v model '%-30s' $model
+    line="($flag) $shortid $model"
+    if [[ $name != $cutid ]] ; then
+      line="$line - $name"
+    fi
+    echo "$line"
   done
 }
 
