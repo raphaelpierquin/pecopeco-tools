@@ -21,6 +21,11 @@ _getid() {
   jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .cutId ' cache/puzzledb.json
 }
 
+_getmodelid() {
+  prefix=$1
+  jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json
+}
+
 lookup() {
   prefix=$1
   inpuzzledb=$(jq --arg prefix $prefix '[.puzzleInfos[] | select(.cutId | test("^"+$prefix))] | length' cache/puzzledb.json)
@@ -43,6 +48,12 @@ lookup() {
   else
     echo "ambiguous"
   fi
+}
+
+list() {
+  for cutid in $(getallcuts) ; do
+    echo "$cutid ($(_getmodelid $cutid))"
+  done
 }
 
 pull() {
