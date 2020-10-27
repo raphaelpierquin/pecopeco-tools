@@ -21,6 +21,35 @@ clean_check() {
   fi
 }
 
+_getid() {
+  prefix=$1
+  jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .cutId ' cache/puzzledb.json
+}
+
+lookup() {
+  prefix=$1
+  inpuzzledb=$(jq --arg prefix $prefix '[.puzzleInfos[] | select(.cutId | test("^"+$prefix))] | length' cache/puzzledb.json)
+  incutdb=$(jq --arg prefix $prefix '[.cutInfos[] | select(.id | test("^"+$prefix))] | length' cache/cutdb.json)
+  if compgen -G "cache/cuts/${prefix}*.json" > /dev/null ; then
+    incutdir=$(ls cache/cuts/$prefix*.json | wc -l)
+  else
+    incutdir=0
+  fi
+  if [[ $inpuzzledb != $incutdb || $incutdb != $incutdir ]] ; then
+    echo "Found $inpuzzledb in cache/puzzledb.json"
+    echo "Found $incutdb in cache/cutdb.json"
+    echo "Found $incutdir in cache/cuts/*"
+    echo "Inconsistent data. Aborting."
+    exit -1
+  elif [[ $inpuzzledb == 1 ]] ; then
+    echo "found"
+  elif [[ $inpuzzledb == 0 ]] ; then
+    echo "none"
+  else
+    echo "ambiguous"
+  fi
+}
+
 pull() {
   for file in $files ; do
     adb pull $REMOTE_PATH/$file cache/
@@ -62,8 +91,12 @@ whatshallIdowith() {
   echo -n $result
 }
 
-_export() {
+export_() {
   prefix=$1
+  if [[ $(lookup $prefix) != unique ]] ; then
+    echo "Can't find a single cut with ${prefix} ($(lookup $prefix))"
+    exit -1
+  fi
   modelId="$(jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json )"
   packagefile="${modelId}-${prefix}.json"
   query='{ puzzleInfo: .[0].puzzleInfos[] | select(.cutId | test("^"+$prefix)) , cutInfo: .[1].cutInfos[] | select(.id | test("^"+$prefix)), slicers: .[2].slicers }'
@@ -72,16 +105,16 @@ _export() {
 }
 
 import () {
-  set -x
   packagefile=$1
   id=$(jq -r '.cutInfo .id' $packagefile)
-  cutfile=cache/cuts/$id.json
-  if [[ ! -f $cutfile ]] ; then
-    jq '{slicers: .slicers}' $packagefile > $cutfile
-    jq -s --arg id $id '.[0].puzzleInfos += [.[1].puzzleInfo] | .[0]' cache/puzzledb.json $packagefile > newpuzzledb.json && mv newpuzzledb.json cache/puzzledb.json
-    jq -s --arg id $id '.[0].cutInfos += [.[1].cutInfo] | .[0]' cache/cutdb.json $packagefile > newcutdb.json && mv newcutdb.json cache/cutdb.json
+  if [[ $(lookup $id) != none ]] ; then
+    echo "This cut already exist : $id"
+    exit -1
   fi
-  echo "Imported $packagefile"
+  cutfile=cache/cuts/$id.json
+  jq '{slicers: .slicers}' $packagefile > $cutfile
+  jq -s --arg id $id '.[0].puzzleInfos += [.[1].puzzleInfo] | .[0]' cache/puzzledb.json $packagefile > newpuzzledb.json && mv newpuzzledb.json cache/puzzledb.json
+  jq -s --arg id $id '.[0].cutInfos += [.[1].cutInfo] | .[0]' cache/cutdb.json $packagefile > newcutdb.json && mv newcutdb.json cache/cutdb.json
 }
 
 clean() {
@@ -107,10 +140,17 @@ case "$1" in
     clean
     ;;
   import)
+    if [[ ! -f "$2" ]] ; then
+      usage
+      exit -1
+    fi
     import $2
     ;;
   export)
-    _export $2
+    export_ $2
+    ;;
+  lookup)
+    lookup $2
     ;;
   *)
     usage
