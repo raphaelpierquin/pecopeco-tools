@@ -101,7 +101,7 @@ remove() {
 
 whatshallIdowith() {
   result="drop"
-  for pattern in $(cat $KEEPDB) ; do
+  for pattern in $(cat $KEEPDB | cut -f 1 -d\  ) ; do
     if  echo $1 | grep "^${pattern}" > /dev/null ; then
       result="keep"
     fi
