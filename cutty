@@ -12,13 +12,8 @@ usage() {
   echo "        ${name} import <package.json>: import cut from a package "
   echo "        ${name} push: upload database to headset "
   echo "        ${name} pull: download database from headset "
-}
-
-clean_check() {
-  if [[ ! -f $KEEPDB ]] ; then
-    echo "List every cuts you want to keep in file '$KEEPDB'"
-    exit -1
-  fi
+  echo "        ${name} remove <cutid>: remove cut"
+  echo "        ${name} list: list all cuts"
 }
 
 _getid() {
@@ -123,6 +118,10 @@ import () {
 }
 
 clean() {
+  if [[ ! -f $KEEPDB ]] ; then
+    echo "List every cuts you want to keep in file '$KEEPDB'"
+    exit -1
+  fi
   echo "$(getallcuts | wc -l) cuts found"
   for cutid in $(getallcuts) ; do
     if [[ "$(whatshallIdowith $cutid)" == "drop" ]] ; then
@@ -141,8 +140,10 @@ case "$1" in
     push
     ;;
   clean)
-    clean_check
     clean
+    ;;
+  list)
+    list;
     ;;
   import)
     if [[ ! -f "$2" ]] ; then
