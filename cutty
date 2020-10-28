@@ -14,6 +14,7 @@ usage() {
   echo "        ${name} pull: download database from headset "
   echo "        ${name} remove <cutid>: remove cut"
   echo "        ${name} list: list all cuts"
+  echo "        ${name} rename <cutid> \"<Name for the cut\" : rename the cut"
 }
 
 
@@ -39,7 +40,7 @@ lookup() {
     echo "Inconsistent data. Aborting."
     exit -1
   elif [[ $inpuzzledb == 1 ]] ; then
-    echo "found"
+    echo "unique"
   elif [[ $inpuzzledb == 0 ]] ; then
     echo "none"
   else
@@ -150,6 +151,16 @@ clean() {
   echo "$(getallcuts | wc -l) cuts left"
 }
 
+rename() {
+  prefix=$1
+  name="$2"
+  if [[ $(lookup $prefix) != unique ]] ; then
+    echo "Can't find a single cut with prefix ${prefix} ($(lookup $prefix))"
+    exit -1
+  fi
+  jq -r --arg prefix $prefix --arg name "$name" '( .cutInfos[] | select(.id | test("^"+$prefix)) .name )="\($name)" ' cache/cutdb.json > newcutdb.json && mv newcutdb.json cache/cutdb.json
+}
+
 case "$1" in
   pull)
     pull
@@ -178,6 +189,9 @@ case "$1" in
     ;;
   remove)
     remove $2
+    ;;
+  rename)
+    rename $2 "$3"
     ;;
   *)
     usage
