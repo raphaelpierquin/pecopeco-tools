@@ -9,9 +9,9 @@ file=${url##*/}
 tmpfile=$tmpdir/${url##*/}
 curl -s $url --output $tmpfile
 HEADSET_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files/PecoPeco/cuts
-if adb shell ls $HEADSET_PATH/$file > /dev/null ; then
+if adb shell ls $HEADSET_PATH | grep $file > /dev/null ; then
   echo "$file already exists on headset."
   echo "Aborting"
 else
-  adb push $tmpfile/$dir $REMOTE_PATH/
+  adb push $tmpfile $HEADSET_PATH/
 fi
