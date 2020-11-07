@@ -1,139 +1,36 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
 
-KEEPDB=cuts_to_keep
-REMOTE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files
-files="puzzledb.json cutdb.json cuts"
+DEVICE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files/PecoPeco/cuts
+SHARE_PATH=cuts
+STAGE=stage
+
+KEEPDB=$STAGE/keep.txt
 
 usage() {
+
   name=$(basename $0)
-  echo "usage : ${name} [clean|import|export|pull|push] [arg]"
-  echo "        ${name} clean : keep only cuts listed in $KEEPDB"
-  echo "        ${name} export <cutid>: export cut to a package"
-  echo "        ${name} import <package.json>: import cut from a package "
-  echo "        ${name} push: upload database to headset "
-  echo "        ${name} pull: download database from headset "
-  echo "        ${name} remove <cutid>: remove cut"
-  echo "        ${name} list: list all cuts"
+  echo "usage : ${name} [clean|export|remove] [arg]"
+  echo "        ${name} clean : remove from headset any cut not listed in $KEEPDB"
+  echo "        ${name} export <cutid> : export cut to $SHARE_PATH"
+  echo "        ${name} remove <cutid> : remove cut from headset"
+  echo "        ${name} list [directory]: list all cuts in directory (defaults : $SHARE_PATH and $CACHE)"
   echo "        ${name} rename <cutid> \"<Name for the cut\" : rename the cut"
+  echo "        ${name} push : upload database to headset "
+  echo "        ${name} pull : download database from headset "
 }
 
-
-_get_cut_info() {
-  prefix=$1
-  info=$2
-  jq -r --arg prefix $prefix --arg info $info '.cutInfos[] | select(.id | test("^"+$prefix)) | .[$info] ' cache/cutdb.json
-}
-
-lookup() {
-  prefix=$1
-  inpuzzledb=$(jq --arg prefix $prefix '[.puzzleInfos[] | select(.cutId | test("^"+$prefix))] | length' cache/puzzledb.json)
-  incutdb=$(jq --arg prefix $prefix '[.cutInfos[] | select(.id | test("^"+$prefix))] | length' cache/cutdb.json)
-  if compgen -G "cache/cuts/${prefix}*.json" > /dev/null ; then
-    incutdir=$(ls cache/cuts/$prefix*.json | wc -l)
-  else
-    incutdir=0
-  fi
-  if [[ $inpuzzledb != $incutdb || $incutdb != $incutdir ]] ; then
-    echo "Found $inpuzzledb in cache/puzzledb.json"
-    echo "Found $incutdb in cache/cutdb.json"
-    echo "Found $incutdir in cache/cuts/*"
-    echo "Inconsistent data. Aborting."
-    exit -1
-  elif [[ $inpuzzledb == 1 ]] ; then
-    echo "unique"
-  elif [[ $inpuzzledb == 0 ]] ; then
-    echo "none"
-  else
-    echo "ambiguous"
-  fi
-}
-
-list() {
-  for cutid in $(getallcuts) ; do
-    name=$(_get_cut_info $cutid name )
-    model=$(_get_cut_info $cutid modelId )
-    shortid="${cutid::7}…"
-    flag=$(whatshallIdowith $cutid)
-    flag=${flag::1}
-    printf -v model '%-30s' $model
-    line="($flag) $shortid $model"
-    if [[ $name != $cutid ]] ; then
-      line="$line - $name"
-    fi
-    echo "$line"
-  done
-}
+if [[ ! -f $KEEPDB ]] ; then
+  touch $KEEPDB
+fi
 
 pull() {
-  for file in $files ; do
-    adb pull $REMOTE_PATH/$file cache/
-  done
+  mkdir -P $STAGE
+  adb pull $DEVICE_PATH/ $STAGE/
 }
 
 push() {
-  adb shell rm -r $REMOTE_PATH/cuts/*
-
-  for file in $files ; do
-    adb push cache/$file $REMOTE_PATH
-  done
-}
-
-getallcuts() {
-(
-  jq ".puzzleInfos[] .cutId" cache/puzzledb.json ;
-  jq ".cutInfos[] .id" cache/cutdb.json ;
-  find cache/cuts/ -name '*.json' -printf "%p\n" | cut -d. -f 1 | cut -d/ -f 3
-  ) | \
-    sed 's/"//g' | \
-    sort | \
-    uniq
-}
-
-remove() {
-  prefix=$1
-  if [[ $(lookup $prefix) == none ]] ; then
-    echo "Found no cut with prefix ${prefix}."
-    exit -1
-  fi
-  jq --arg prefix $prefix 'del (.puzzleInfos[] | select(.cutId | test("^"+$prefix)))' cache/puzzledb.json > puzzledb.json.updated && mv puzzledb.json.updated cache/puzzledb.json
-  jq --arg prefix $prefix 'del (.cutInfos[] | select(.id | test("^"+$prefix)))' cache/cutdb.json > cutdb.json.updated && mv cutdb.json.updated cache/cutdb.json
-  rm -f cache/cuts/$1*.json
-}
-
-whatshallIdowith() {
-  result="drop"
-  for pattern in $(cat $KEEPDB | cut -f 1 -d\  ) ; do
-    if  echo $1 | grep "^${pattern}" > /dev/null ; then
-      result="keep"
-    fi
-  done
-  echo -n $result
-}
-
-export_() {
-  prefix=$1
-  if [[ $(lookup $prefix) != unique ]] ; then
-    echo "Can't find a single cut with prefix ${prefix} ($(lookup $prefix))"
-    exit -1
-  fi
-  modelId="$(jq -r --arg prefix $prefix '.puzzleInfos[] | select(.cutId | test("^"+$prefix)) | .modelId ' cache/puzzledb.json )"
-  packagefile="${modelId}-${prefix}.json"
-  query='{ puzzleInfo: .[0].puzzleInfos[] | select(.cutId | test("^"+$prefix)) , cutInfo: .[1].cutInfos[] | select(.id | test("^"+$prefix)), slicers: .[2].slicers }'
-  jq -s --arg prefix $prefix "$query" cache/puzzledb.json cache/cutdb.json cache/cuts/${prefix}*.json > $packagefile
-  echo "Extracted $packagefile"
-}
-
-import () {
-  packagefile=$1
-  id=$(jq -r '.cutInfo .id' $packagefile)
-  if [[ $(lookup $id) != none ]] ; then
-    echo "This cut already exist : $id"
-    exit -1
-  fi
-  cutfile=cache/cuts/$id.json
-  jq '{slicers: .slicers}' $packagefile > $cutfile
-  jq -s --arg id $id '.[0].puzzleInfos += [.[1].puzzleInfo] | .[0]' cache/puzzledb.json $packagefile > newpuzzledb.json && mv newpuzzledb.json cache/puzzledb.json
-  jq -s --arg id $id '.[0].cutInfos += [.[1].cutInfo] | .[0]' cache/cutdb.json $packagefile > newcutdb.json && mv newcutdb.json cache/cutdb.json
+  adb shell rm -r $DEVICE_PATH/cuts/*
+  adb push $STAGE/* $DEVICE_PATH/
 }
 
 clean() {
@@ -141,24 +38,92 @@ clean() {
     echo "List every cuts you want to keep in file '$KEEPDB'"
     exit -1
   fi
-  echo "$(getallcuts | wc -l) cuts found"
-  for cutid in $(getallcuts) ; do
-    if [[ "$(whatshallIdowith $cutid)" == "drop" ]] ; then
-      echo "Dropping $cutid …"
-      remove $cutid
+  echo "$(ls $STAGE/*.json | wc -l) cuts found"
+  for file in $(ls $STAGE/*.json) ; do
+    if [[ "$(_whatshallIdowith $file)" == "drop" ]] ; then
+      echo "Dropping $file …"
+      rm $file
     fi
   done
-  echo "$(getallcuts | wc -l) cuts left"
+  echo "$(ls $STAGE/*.json | wc -l) cuts left"
 }
 
-rename() {
+export() {
   prefix=$1
-  name="$2"
-  if [[ $(lookup $prefix) != unique ]] ; then
-    echo "Can't find a single cut with prefix ${prefix} ($(lookup $prefix))"
-    exit -1
+  files=($(adb ls $DEVICE_PATH | grep " $prefix" | cut -d\  -f 4))
+  case ${#files[@]} in
+    0)
+      echo "Found no cut file on headset with a file name starting with $prefix"
+      ;;
+    1)
+      echo "Exporting $files to $SHARE_PATH"
+      adb pull $DEVICE_PATH/$files $SHARE_PATH
+      return
+      ;;
+    *)
+      echo "Found more than one cuts with a file name starting with $prefix"
+  esac
+}
+
+
+_format_cell() {
+  value=$1
+  width=$2
+  value=$(echo $value | sed -e 's/^"//; s/"$//')
+  if [[ "$value" == "null" ]] ; then
+    value=""
   fi
-  jq -r --arg prefix $prefix --arg name "$name" '( .cutInfos[] | select(.id | test("^"+$prefix)) .name )="\($name)" ' cache/cutdb.json > newcutdb.json && mv newcutdb.json cache/cutdb.json
+  if [[ "${#value}" -gt $width ]]; then
+    value="${value::$width-1}…"
+  fi
+  printf "%-${width}s" "$value"
+}
+
+_all_cut_ids() {
+  files=$(compgen -G "$STAGE/*.json" ; compgen -G "$SHARE_PATH/*.json" )
+  jq -s '.[].id' $files | sed 's/"//g' | sort | uniq
+}
+
+_lookup() {
+  prefix=$1
+  cutsfile=$(mktemp)
+  idsfile=$(mktemp)
+  cuts=$(compgen -G "$STAGE/*.json" ; compgen -G "$SHARE_PATH/*.json")
+  [[ -z "$cuts" && return ]]
+  jq -s '.[].id' $cuts | sed 's/"//g' > $idsfile
+  echo $cuts | sed 's/ /\n/g' > $cutsfile
+  paste -d : $idsfile $cutsfile | grep "^$prefix" | cut -d : -f 2
+}
+
+_whatshallIdowith() {
+  file=$1
+  answer=drop
+  id=$(jq '.id' $file | sed 's/"//g' )
+  for prefix in $(cat $KEEPDB | cut -d\  -f 1) ; do
+    if [[ $id =~ ^${prefix} ]] ; then
+      answer=keep
+    fi
+  done
+  echo $answer
+}
+
+list() {
+  dir=$1
+  for id in $(_all_cut_ids)
+  do
+    files=$(_lookup $id)
+    file=$(echo $files | cut -d\  -f 1)
+    if [[ -n "$dir" && ! $files =~ "$dir" ]] ; then
+      continue
+    fi
+    if [[ "$files" =~ "$STAGE" ]] ; then flags="s" ; else flags="." ; fi
+    if [[ $(_whatshallIdowith $file) == keep ]] ; then flags="${flags}k" ; else flags="${flags}d" ; fi
+    if [[ "$files" =~ "$SHARE_PATH" ]] ; then flags="${flags}s" ; else flags="${flags}." ; fi
+    shortid=$(_format_cell "$(jq .id $file)" 7)
+    model=$(_format_cell "$(jq .modelId $file)" 25)
+    name=$(_format_cell "$(jq .name $file)" 40)
+    echo "$shortid ($flags) $model $author $name $desc"
+  done
 }
 
 case "$1" in
@@ -172,26 +137,13 @@ case "$1" in
     clean
     ;;
   list)
-    list;
-    ;;
-  import)
-    if [[ ! -f "$2" ]] ; then
-      usage
-      exit -1
-    fi
-    import $2
+    list $2;
     ;;
   export)
-    export_ $2
-    ;;
-  lookup)
-    lookup $2
+    export $2
     ;;
   remove)
     remove $2
-    ;;
-  rename)
-    rename $2 "$3"
     ;;
   *)
     usage
