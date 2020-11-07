@@ -9,12 +9,10 @@ KEEPDB=$STAGE/keep.txt
 usage() {
 
   name=$(basename $0)
-  echo "usage : ${name} [clean|export|remove] [arg]"
+  echo "usage : ${name} [clean|export|remove|list|push|pull] [arg]"
   echo "        ${name} clean : remove from headset any cut not listed in $KEEPDB"
   echo "        ${name} export <cutid> : export cut to $SHARE_PATH"
-  echo "        ${name} remove <cutid> : remove cut from headset"
   echo "        ${name} list [directory]: list all cuts in directory (defaults : $SHARE_PATH and $CACHE)"
-  echo "        ${name} rename <cutid> \"<Name for the cut\" : rename the cut"
   echo "        ${name} push : upload database to headset "
   echo "        ${name} pull : download database from headset "
 }
@@ -141,9 +139,6 @@ case "$1" in
     ;;
   export)
     export $2
-    ;;
-  remove)
-    remove $2
     ;;
   *)
     usage
