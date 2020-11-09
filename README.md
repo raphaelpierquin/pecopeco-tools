@@ -1,4 +1,4 @@
-# Tools to import and export Peco Peco cuts.
+# cutty : a tools to import and export Peco Peco cuts.
 
 ## About
 
@@ -47,3 +47,12 @@ this has not been test yet
 s -> on stage
 k -> k
 s -> in cuts
+
+# viewslicer
+
+## requirement
+
+```
+npm install @jscad/cli
+npm install quaternion
+```
