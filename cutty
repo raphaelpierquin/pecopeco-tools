@@ -42,19 +42,19 @@ set_property() {
   tmp=$(mktemp)
   files=$(_lookup $prefix)
   for file in $files ; do
-    if [[ "$name" == id ]] ; then
-      dstfile="$(dirname $file)/${value}.json"
-    else
-      dstfile=$file
+    jq -r --arg prefix $prefix --arg name "$name" --arg value "$value" '.[$name] ="\($value)"' $file > $tmp && mv $tmp $file
+
+    if [[ "$name" != id ]] ; then
+      return
     fi
-    jq -r --arg prefix $prefix --arg name "$name" --arg value "$value" '.[$name] ="\($value)"' $file > $tmp && mv $tmp $dstfile
+    dstfile="$(dirname $file)/${value}.json"
+    mv $file $dstfile
     actionbefore=$(_whatshallIdowith $file)
     actionafter=$(_whatshallIdowith $dstfile)
-    if [[ "$name" == id && $actionbefore != $actionafter ]] ; then
-      echo "warning : we used to $actionbefore this cut, and now we will $actionafter it"
+    if [[ $actionbefore != $actionafter ]] ; then
+      echo "Warning : we used to $actionbefore this cut, and now we will $actionafter it"
     fi
   done
-  rm -f $tmp
 }
 
 
@@ -126,10 +126,15 @@ _lookup() {
 _whatshallIdowith() {
   file=$1
   answer=drop
-  id=$(jq '.id' $file | sed 's/"//g' )
+  if [[ -f file ]] ; then
+    id=$(jq '.id' $file | sed 's/"//g' )
+  else
+    id=$(basename $file .json)
+  fi
   for prefix in $(cat $KEEPDB | cut -d\  -f 1) ; do
     if [[ $id =~ ^${prefix} ]] ; then
       answer=keep
+      return
     fi
   done
   echo $answer
