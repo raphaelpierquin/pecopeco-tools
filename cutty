@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
-DEVICE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files/PecoPeco/cuts
-SHARE_PATH=cuts
+DEVICE_PATH=storage/self/primary/Android/data/am.benth.pecopeco/files/PecoPeco
 STAGE=stage
+STAGED_CUTS=$STAGE/cuts
+SHARED=shared
+SHARED_CUTS=$SHARED/cuts
 
-KEEPDB=$STAGE/keep.txt
+KEEPDB=$STAGED_CUTS/keep.txt
 
 usage() {
 
   name=$(basename $0)
   echo "usage : ${name} [clean|export|remove|list|push|pull] [arg]"
   echo "        ${name} clean : remove from headset any cut not listed in $KEEPDB"
-  echo "        ${name} export <cutid> : export cut to $SHARE_PATH"
-  echo "        ${name} list [directory]: list all cuts in directory (defaults : $SHARE_PATH and $CACHE)"
-  echo "        ${name} push : upload database to headset "
-  echo "        ${name} pull : download database from headset "
+  echo "        ${name} export <cutid> : export cut to $SHARED_CUTS"
+  echo "        ${name} list [directory]: list all cuts in directory (defaults : $STAGED_CUST)"
+  echo "        ${name} push : upload stage to headset"
+  echo "        ${name} pull : download stage from headset"
+  echo "        ${name} lookup <cutid> : find a cut file given the first character of it's id"
+  echo "        ${name} set <value> <name> <cutid>"
 }
 
 if [[ ! -f $KEEPDB ]] ; then
@@ -22,40 +26,63 @@ if [[ ! -f $KEEPDB ]] ; then
 fi
 
 pull() {
-  mkdir -P $STAGE
-  adb pull $DEVICE_PATH/ $STAGE/
+  mkdir -p $STAGE
+  adb pull $DEVICE_PATH/ $STAGE
 }
 
 push() {
   adb shell rm -r $DEVICE_PATH/cuts/*
-  adb push $STAGE/* $DEVICE_PATH/
+  adb push $STAGED_CUTS $DEVICE_PATH/
 }
+
+set_property() {
+  name=$1
+  value=$2
+  prefix=$3
+  tmp=$(mktemp)
+  files=$(_lookup $prefix)
+  for file in $files ; do
+    if [[ "$name" == id ]] ; then
+      dstfile="$(dirname $file)/${value}.json"
+    else
+      dstfile=$file
+    fi
+    jq -r --arg prefix $prefix --arg name "$name" --arg value "$value" '.[$name] ="\($value)"' $file > $tmp && mv $tmp $dstfile
+    actionbefore=$(_whatshallIdowith $file)
+    actionafter=$(_whatshallIdowith $dstfile)
+    if [[ "$name" == id && $actionbefore != $actionafter ]] ; then
+      echo "warning : we used to $actionbefore this cut, and now we will $actionafter it"
+    fi
+  done
+  rm -f $tmp
+}
+
 
 clean() {
   if [[ ! -f $KEEPDB ]] ; then
     echo "List every cuts you want to keep in file '$KEEPDB'"
     exit -1
   fi
-  echo "$(ls $STAGE/*.json | wc -l) cuts found"
-  for file in $(ls $STAGE/*.json) ; do
+  echo "$(ls $STAGED_CUTS/*.json | wc -l) cuts found"
+  for file in $(ls $STAGED_CUTS/*.json) ; do
     if [[ "$(_whatshallIdowith $file)" == "drop" ]] ; then
       echo "Dropping $file …"
       rm $file
     fi
   done
-  echo "$(ls $STAGE/*.json | wc -l) cuts left"
+  echo "$(ls $STAGED_CUTS/*.json | wc -l) cuts left"
 }
 
 export() {
   prefix=$1
-  files=($(adb ls $DEVICE_PATH | grep " $prefix" | cut -d\  -f 4))
+  files=($(adb ls $DEVICE_PATH/cuts | grep " $prefix" | cut -d\  -f 4))
   case ${#files[@]} in
     0)
       echo "Found no cut file on headset with a file name starting with $prefix"
       ;;
     1)
-      echo "Exporting $files to $SHARE_PATH"
-      adb pull $DEVICE_PATH/$files $SHARE_PATH
+      echo "Exporting $files to $SHARED_CUTS"
+      adb pull $DEVICE_PATH/cuts/$files $SHARED_CUTS
       return
       ;;
     *)
@@ -78,15 +105,18 @@ _format_cell() {
 }
 
 _all_cut_ids() {
-  files=$(compgen -G "$STAGE/*.json" ; compgen -G "$SHARE_PATH/*.json" )
+  files=$(compgen -G "$STAGED_CUTS/*.json" ; compgen -G "$SHARED_CUTS/*.json" )
   jq -s '.[].id' $files | sed 's/"//g' | sort | uniq
 }
 
 _lookup() {
   prefix=$1
+  if [[ -f $1 ]] ; then
+    prefix=$(jq '.id' $1 | sed 's/"//g' )
+  fi
   cutsfile=$(mktemp)
   idsfile=$(mktemp)
-  cuts=$(compgen -G "$STAGE/*.json" ; compgen -G "$SHARE_PATH/*.json")
+  cuts=$(compgen -G "$STAGED_CUTS/*.json" ; compgen -G "$SHARED_CUTS/*.json")
   [[ -z "$cuts" && return ]]
   jq -s '.[].id' $cuts | sed 's/"//g' > $idsfile
   echo $cuts | sed 's/ /\n/g' > $cutsfile
@@ -116,11 +146,14 @@ list() {
     fi
     if [[ "$files" =~ "$STAGE" ]] ; then flags="s" ; else flags="." ; fi
     if [[ $(_whatshallIdowith $file) == keep ]] ; then flags="${flags}k" ; else flags="${flags}d" ; fi
-    if [[ "$files" =~ "$SHARE_PATH" ]] ; then flags="${flags}s" ; else flags="${flags}." ; fi
-    shortid=$(_format_cell "$(jq .id $file)" 7)
+    if [[ "$files" =~ "$SHARED_CUTS" ]] ; then flags="${flags}s" ; else flags="${flags}." ; fi
+    shortid=$(_format_cell "$(jq .id $file)" 10)
     model=$(_format_cell "$(jq .modelId $file)" 25)
     name=$(_format_cell "$(jq .name $file)" 40)
-    echo "$shortid ($flags) $model $author $name $desc"
+    author=$(_format_cell "$(jq .author $file)" 10)
+    pieces=$(_format_cell "$(jq .pieceCount $file)" 3)
+    timetosolve=$(_format_cell "$(jq .timeToSolve $file)" 3)
+    echo "$shortid ($flags) $model $pieces $author $timetosolve $name"
   done
 }
 
@@ -139,6 +172,12 @@ case "$1" in
     ;;
   export)
     export $2
+    ;;
+  lookup)
+    _lookup $2
+    ;;
+  set)
+    set_property $2 "$3" $4
     ;;
   *)
     usage

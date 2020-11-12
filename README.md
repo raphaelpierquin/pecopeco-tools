@@ -18,7 +18,7 @@ Tested Ubuntu 20.04.1 LTS (Focal Fossa)
 
 - edit you keep file (see keep.txt.sample for an example)
 
-> vim stage/keep.txt
+> vim stage/cuts/keep.txt
 
 - check the cuts you want to keep are flagged with a 'k'
 
@@ -44,9 +44,11 @@ this has not been test yet
 
 ### what's the meaning of the flags in cutty list output ?
 
-s -> on stage
-k -> k
-s -> in cuts
+exemple (sks)
+
+first s -> on stage
+k -> keep this (don't clean it) - or d for drop
+second s -> shared
 
 # viewslicer
 
