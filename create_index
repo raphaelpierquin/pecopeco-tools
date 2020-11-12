@@ -1,0 +1,1 @@
+(cd shared/cuts/; ls *.json | sed 's/^/"/ ; s/$/"/') | jq -s '[.]|add' > shared/cuts.json
