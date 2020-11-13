@@ -5,7 +5,7 @@
 Requirements : bash, jq
 Tested Ubuntu 20.04.1 LTS (Focal Fossa)
 
-[shared cuts here](cuts)
+[shared cuts here](shared/)
 
 ## N.A.Q.
 
