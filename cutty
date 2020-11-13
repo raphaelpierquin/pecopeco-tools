@@ -125,7 +125,6 @@ _lookup() {
 
 _whatshallIdowith() {
   file=$1
-  answer=drop
   if [[ -f file ]] ; then
     id=$(jq '.id' $file | sed 's/"//g' )
   else
@@ -133,11 +132,11 @@ _whatshallIdowith() {
   fi
   for prefix in $(cat $KEEPDB | cut -d\  -f 1) ; do
     if [[ $id =~ ^${prefix} ]] ; then
-      answer=keep
+      echo keep
       return
     fi
   done
-  echo $answer
+  echo drop
 }
 
 list() {
