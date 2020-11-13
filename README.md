@@ -5,6 +5,7 @@
 Requirements : bash, jq
 Tested Ubuntu 20.04.1 LTS (Focal Fossa)
 
+[shared cuts here](cuts)
 
 ## N.A.Q.
 
@@ -40,11 +41,9 @@ Tested Ubuntu 20.04.1 LTS (Focal Fossa)
 
 - then tell friend to run `curl -s <THIS_REPO_URL/install.bash | bash -s -- <CUT_URL>`
 
-this has not been test yet
-
 ### what's the meaning of the flags in cutty list output ?
 
-exemple (sks)
+exemple : (sks)
 
 first s -> on stage
 k -> keep this (don't clean it) - or d for drop
