@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Peco Peco cuts</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link href="sortable.css" rel="stylesheet" />
+    <script src="sortable.js"></script>
+  </head>
+  <body>
+    <table class="sortable">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Number of pieces</th>
+          <th>Time to solve</th>
+          <th>Name</th>
+          <th>Author</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template id="line-to-repeat">
+          <tr>
+            <td data-property="modelId"> </td>
+            <td data-property="pieceCount"> </td>
+            <td data-property="timeToSolve"> </td>
+            <td data-property="name"> </td>
+            <td data-property="author"> </td>
+            <td><a href="somewhere">here</a></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </body>
+</html>
+
