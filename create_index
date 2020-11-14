@@ -1,1 +1,6 @@
-(cd shared/cuts/; ls *.json | sed 's/^/"/ ; s/$/"/') | jq -s '[.]|add' > shared/cuts.json
+(
+  cd shared
+  find cuts -name \*.json |
+    xargs jq 'del(.slicers) | .href = input_filename' |
+    jq --slurp .
+) > shared/cuts.json
