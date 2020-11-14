@@ -10,11 +10,12 @@ function getJSON(url, callback) {
   xobj.send();
 }
 
-function addCut(filename,url,cut) {
+function addCut(cut) {
   var t = document.querySelector('#line-to-repeat');
   var line = document.importNode(t.content, true);
-  line.querySelectorAll('a')[0].href = url;
-  var cmd = oneliner(filename);
+  line.querySelectorAll('a')[0].href = cut.href;
+  var url = new URL(cut.href, document.location.href).toString();
+  var cmd = oneliner(url, cut.id);
   line.querySelectorAll('a')[1].setAttribute("title", cmd);
   line.querySelectorAll('a')[1].onclick = function(e) {
     copyTextToClipboard(cmd);
@@ -36,19 +37,14 @@ async function copyTextToClipboard(text) {
   }
 }
 
-function oneliner(filename) {
-  return "curl " + document.location.href + '/' + filename + " | adb shell 'cat > /sdcard/Android/data/am.benth.pecopeco/files/PecoPeco/cuts/" + filename + "'"
+function oneliner(url, id) {
+  return "curl " + url + " | adb shell 'cat > /sdcard/Android/data/am.benth.pecopeco/files/PecoPeco/cuts/" + id + ".json'"
 }
 
 document.onreadystatechange = function () {
   if (document.readyState === 'interactive') {
     getJSON('cuts.json', function(cuts) {
-      cuts.forEach(function(filename) {
-        var url='cuts/' + filename;
-        getJSON(url, function(cut) {
-          addCut(filename,url,cut);
-        });
-      });
+      cuts.forEach(addCut);
     });
   }
 }
