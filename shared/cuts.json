@@ -1,8 +1,68 @@
 [
-  "30b6-tiny-cabin-16-pieces-the-pizza-way.json",
-  "96e8-missing-camera-39-pieces-Leaps.json",
-  "b6cd-treehouse-10-pieces-Cluttered-slices.json",
-  "cf46-littlest-tokyo-60-pieces-Coarse-and-delicate.json",
-  "e7d5-shark-cage-47-pieces-Broken-jaws.json",
-  "the-wizards-enigmatic-cabin-laurents-cut.json"
+  {
+    "id": "30b6-tiny-cabin-16-pieces-the-pizza-way",
+    "modelId": "tiny-cabin",
+    "name": "The pizza way",
+    "pieceCount": 16,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "4",
+    "href": "cuts/30b6-tiny-cabin-16-pieces-the-pizza-way.json"
+  },
+  {
+    "id": "96e8-missing-camera-39-pieces-Leaps",
+    "modelId": "missing-camera",
+    "name": "Leaps",
+    "pieceCount": "39",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "12",
+    "href": "cuts/96e8-missing-camera-39-pieces-Leaps.json"
+  },
+  {
+    "id": "b6cd-treehouse-10-pieces-Cluttered-slices",
+    "modelId": "treehouse",
+    "name": "Cluttered slices",
+    "pieceCount": "10",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "5",
+    "href": "cuts/b6cd-treehouse-10-pieces-Cluttered-slices.json"
+  },
+  {
+    "id": "cf46-littlest-tokyo-60-pieces-Coarse-and-delicate",
+    "modelId": "littlest-tokyo",
+    "name": "Coarse and delicate",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "pieceCount": "60",
+    "author": "Raphaël",
+    "timeToSolve": "15",
+    "href": "cuts/cf46-littlest-tokyo-60-pieces-Coarse-and-delicate.json"
+  },
+  {
+    "id": "e7d5-shark-cage-47-pieces-Broken-jaws",
+    "modelId": "shark-cage",
+    "name": "Broken jaws",
+    "pieceCount": "47",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "12",
+    "href": "cuts/e7d5-shark-cage-47-pieces-Broken-jaws.json"
+  },
+  {
+    "id": "the-wizards-enigmatic-cabin-laurents-cut",
+    "modelId": "the-wizards-enigmatic-cabin",
+    "name": "Laurent's cut",
+    "pieceCount": "32",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Laurent",
+    "timeToSolve": "11",
+    "href": "cuts/the-wizards-enigmatic-cabin-laurents-cut.json"
+  }
 ]
