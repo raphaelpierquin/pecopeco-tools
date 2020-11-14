@@ -12,14 +12,32 @@ function getJSON(url, callback) {
 
 function addCut(filename,url,cut) {
   var t = document.querySelector('#line-to-repeat');
-  t.content.querySelector('a').href = url;
-  t.content.querySelectorAll('td').forEach(function(td) {
+  var line = document.importNode(t.content, true);
+  line.querySelectorAll('a')[0].href = url;
+  var cmd = oneliner(filename);
+  line.querySelectorAll('a')[1].setAttribute("title", cmd);
+  line.querySelectorAll('a')[1].onclick = function(e) {
+    copyTextToClipboard(cmd);
+    e.preventDefault();
+  }
+  line.querySelectorAll('td').forEach(function(td) {
     if (td.dataset.property) {
       td.textContent=cut[td.dataset.property]
     }
   });
-  var clone = document.importNode(t.content, true);
-  document.querySelector('tbody').appendChild(clone);
+  document.querySelector('tbody').appendChild(line);
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch(err) {
+    console.error('Error in copying text: ', err);
+  }
+}
+
+function oneliner(filename) {
+  return "curl " + document.location.href + '/' + filename + " | adb shell 'cat > /sdcard/Android/data/am.benth.pecopeco/files/PecoPeco/cuts/" + filename + "'"
 }
 
 document.onreadystatechange = function () {

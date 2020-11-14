@@ -1,0 +1,9 @@
+.button {
+  background: yellow ;
+  border: 1px solid;
+  padding: 2px;
+}
+
+.sortable th.no-sort {
+  pointer-events: none;
+}
