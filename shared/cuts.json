@@ -97,6 +97,17 @@
     "href": "cuts/408eda0c-8015-4a0f-aec7-b5d92b1bb140.json"
   },
   {
+    "id": "b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles",
+    "modelId": "jiggly-watermelon-jello",
+    "name": "Giggly bubbles",
+    "pieceCount": 80,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "45",
+    "href": "cuts/b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles.json"
+  },
+  {
     "id": "efdb723d-4e12-40e3-9021-3c925d63a6f3",
     "modelId": "sushi-bar",
     "name": "2020-11-20 00:11:45",
