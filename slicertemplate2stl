@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -ex
+file=$1
+target=$2
+tmp=$(mktemp --suffix .stl)
+./node_modules/.bin/openjscad slicertemplate.jscad --input $file -o $tmp
+mv $tmp $target
+

@@ -16,11 +16,20 @@ function loadSlicerData(filename) {
 
 function main(parameters) {
   let data = loadSlicerData(parameters.input);
-  hand2 = union(
-    cube().scale([1,4,9]),
-    cube().scale([1,1,5]).translate([0,4,0])
-  ).scale(0.15).translate(-0.5,-2,5,-13)
-  let volume = union(cube().scale([-4,1,1]), cube().scale([1,7,1]), cube().scale([1,1,9])).scale(0.03).translate([0,0,-0.5])
+  let axes = union(
+        cube({size: [500,1,1],  center: true}).translate([300,0,0]),
+        cube({size: [1,500,1],  center: true}).translate([0,300,0]),
+        cube({size: [1,1,500],  center: true}).translate([0,0,300])
+  );
+  let hand = union(//axes,
+        cube({size: [1,4,5],  center: true}).translate([0,.5,0]),
+        cube({size: [1,1,4],  center: true}).translate([0,-1,4]),
+        cube({size: [1,1,5],  center: true}).translate([0, 0,5]),
+        cube({size: [1,1,4],  center: true}).translate([0, 1,4]),
+        cube({size: [1,1,3],  center: true}).translate([0, 2,3]).rotateX(-10),
+        cube({size: [1,1,4],  center: true}).translate([0, -1,2]).rotateX(30).rotateY(20)
+  ).translate([-2,0,-14]).scale(0.03).scale([1,-1,1])
+  let volume = union(hand)
   data.volumes.forEach(function(d) {
     let v = null;
     if (d.type == "sphere") {
@@ -40,7 +49,7 @@ function main(parameters) {
     volume = union(volume, v);
   });
   console.log("done")
-  return volume;
+  return volume.rotateZ(180).rotateY(-10).rotateX(-60);
 }
 
 const getParameterDefinitions = () => {

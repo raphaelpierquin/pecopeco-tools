@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
-set -e
-file=$1
+set -ex
+input=$1
 tmp=$(mktemp --suffix .stl)
-./node_modules/.bin/openjscad slicer.jscad --input $1 -o $tmp
-if [[ -f $tmp ]] ; then
-  view3dscene $tmp
-  rm $tmp
-fi
+mkstl="./slicertemplate2stl $input $tmp"
+
+$mkstl
+fstl $tmp & pid=$!
+trap "kill $pid" EXIT
+
+while true ; do
+  inotifywait $input
+  $mkstl
+done
+
