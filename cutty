@@ -5,6 +5,7 @@ STAGE=stage
 STAGED_CUTS=$STAGE/cuts
 SHARED=shared
 SHARED_CUTS=$SHARED/cuts
+DIR_TO_STAGE=(cuts slicer-timer)
 
 KEEPDB=$STAGED_CUTS/keep.txt
 
@@ -13,8 +14,7 @@ usage() {
   name=$(basename $0)
   echo "usage : ${name} [clean|export|remove|list|push|pull] [arg]"
   echo "        ${name} clean : remove from headset any cut not listed in $KEEPDB"
-  echo "        ${name} export <cutid> : export cut to $SHARED_CUTS"
-  echo "        ${name} list [directory]: list all cuts in directory (defaults : $STAGED_CUST)"
+  echo "        ${name} list [directory]: list all cuts in directory (defaults : $STAGED_CUTS)"
   echo "        ${name} push : upload stage to headset"
   echo "        ${name} pull : download stage from headset"
   echo "        ${name} lookup <cutid> : find a cut file given the first character of it's id"
@@ -22,17 +22,21 @@ usage() {
 }
 
 if [[ ! -f $KEEPDB ]] ; then
+  mkdir -p $(dirname $KEEPDB)
   touch $KEEPDB
 fi
 
 pull() {
-  mkdir -p $STAGE
-  adb pull $DEVICE_PATH/ $STAGE
+  for dir in cuts slicer-templates ; do
+    adb pull $DEVICE_PATH/$dir $STAGE
+  done
 }
 
 push() {
-  adb shell rm -r $DEVICE_PATH/cuts/*
-  adb push $STAGED_CUTS $DEVICE_PATH/
+  for dir in cuts slicer-templates ; do
+    adb shell rm -r $DEVICE_PATH/$dir/*
+    adb push $STAGE/$dir $DEVICE_PATH/
+  done
 }
 
 set_property() {
@@ -72,24 +76,6 @@ clean() {
   done
   echo "$(ls $STAGED_CUTS/*.json | wc -l) cuts left"
 }
-
-export() {
-  prefix=$1
-  files=($(adb ls $DEVICE_PATH/cuts | grep " $prefix" | cut -d\  -f 4))
-  case ${#files[@]} in
-    0)
-      echo "Found no cut file on headset with a file name starting with $prefix"
-      ;;
-    1)
-      echo "Exporting $files to $SHARED_CUTS"
-      adb pull $DEVICE_PATH/cuts/$files $SHARED_CUTS
-      return
-      ;;
-    *)
-      echo "Found more than one cuts with a file name starting with $prefix"
-  esac
-}
-
 
 _format_cell() {
   value=$1
@@ -173,9 +159,6 @@ case "$1" in
     ;;
   list)
     list $2;
-    ;;
-  export)
-    export $2
     ;;
   lookup)
     _lookup $2
