@@ -11,5 +11,6 @@ trap "kill $pid" EXIT
 while true ; do
   inotifywait $input
   $mkstl
+  ps $pid 2>&1 > /dev/null || exit
 done
 
