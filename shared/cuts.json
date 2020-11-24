@@ -11,6 +11,17 @@
     "href": "cuts/cf46-littlest-tokyo-60-pieces-Coarse-and-delicate.json"
   },
   {
+    "id": "7d72-freshfood-burger-and-fries-84-pieces-small-bites",
+    "modelId": "freshfood-burger-and-fries",
+    "name": "Small bites",
+    "pieceCount": 84,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "29",
+    "href": "cuts/7d72-freshfood-burger-and-fries-84-pieces-small-bites.json"
+  },
+  {
     "id": "fafc-egg-in-a-hiole-17-pieces-humpty_shapes",
     "modelId": "egg-in-a-hole",
     "name": "Humpty shapes",
