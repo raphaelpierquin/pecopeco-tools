@@ -11,6 +11,17 @@
     "href": "cuts/cf46-littlest-tokyo-60-pieces-Coarse-and-delicate.json"
   },
   {
+    "id": "684f-strawberry-jumbo-19-pieces-aussitot-fraise",
+    "modelId": "strawberry-jumbo",
+    "name": "Aussitôt fraise",
+    "pieceCount": 19,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Laurent",
+    "timeToSolve": "6",
+    "href": "cuts/684f-strawberry-jumbo-19-pieces-aussitot-fraise.json"
+  },
+  {
     "id": "7d72-freshfood-burger-and-fries-84-pieces-small-bites",
     "modelId": "freshfood-burger-and-fries",
     "name": "Small bites",
