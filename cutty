@@ -105,7 +105,7 @@ _lookup() {
   cuts=$(compgen -G "$STAGED_CUTS/*.json" ; compgen -G "$SHARED_CUTS/*.json")
   [[ -z "$cuts" && return ]]
   jq -s '.[].id' $cuts | sed 's/"//g' > $idsfile
-  echo $cuts | sed 's/ /\n/g' > $cutsfile
+  echo $cuts | tr " " "\n" > $cutsfile
   paste -d : $idsfile $cutsfile | grep "^$prefix" | cut -d : -f 2
 }
 
