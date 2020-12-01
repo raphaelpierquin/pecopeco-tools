@@ -33,6 +33,17 @@
     "href": "cuts/7d72-freshfood-burger-and-fries-84-pieces-small-bites.json"
   },
   {
+    "id": "a950-waffling-on-63-pieces-melting-pot",
+    "modelId": "waffling-on",
+    "name": "Melting pot",
+    "pieceCount": 63,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "timeToSolve": "19",
+    "author": "Raphaël",
+    "href": "cuts/a950-waffling-on-63-pieces-melting-pot.json"
+  },
+  {
     "id": "fafc-egg-in-a-hiole-17-pieces-humpty_shapes",
     "modelId": "egg-in-a-hole",
     "name": "Humpty shapes",
@@ -55,16 +66,6 @@
     "href": "cuts/b6cd-treehouse-10-pieces-Cluttered-slices.json"
   },
   {
-    "id": "b0a3fbca-05ac-4ebc-81d8-c739980af964",
-    "modelId": "coho-chip-cookie",
-    "name": "2020-11-20 00:14:56",
-    "pieceCount": 2,
-    "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
-    "author": "Laurent",
-    "href": "cuts/b0a3fbca-05ac-4ebc-81d8-c739980af964.json"
-  },
-  {
     "id": "96e8-missing-camera-39-pieces-Leaps",
     "modelId": "missing-camera",
     "name": "Leaps",
@@ -85,6 +86,17 @@
     "author": "Raphaël",
     "timeToSolve": "4",
     "href": "cuts/30b6-tiny-cabin-16-pieces-the-pizza-way.json"
+  },
+  {
+    "id": "cf7e-coffee-and-donuts-85-pieces-far-feched-clues",
+    "modelId": "coffee-and-donuts",
+    "name": "Far-feched clues",
+    "pieceCount": 85,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "33",
+    "href": "cuts/cf7e-coffee-and-donuts-85-pieces-far-feched-clues.json"
   },
   {
     "id": "the-wizards-enigmatic-cabin-laurents-cut",
@@ -117,6 +129,17 @@
     "piecesPerColumn": 4,
     "author": "Laurent",
     "href": "cuts/408eda0c-8015-4a0f-aec7-b5d92b1bb140.json"
+  },
+  {
+    "id": "3f32-still-life-lemons-25-pieces-whirling-slices",
+    "modelId": "still-life-lemons",
+    "name": "Whirling slices",
+    "pieceCount": 25,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Raphaël",
+    "timeToSolve": "7",
+    "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
     "id": "b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles",
@@ -159,6 +182,17 @@
     "author": "Raphaël",
     "timeToSolve": "12",
     "href": "cuts/e7d5-shark-cage-47-pieces-Broken-jaws.json"
+  },
+  {
+    "id": "71c9-still-life-advocado-37-pieces-no-spoon",
+    "modelId": "still-life-avocado",
+    "name": "No spoon",
+    "author": "Raphaël",
+    "pieceCount": 37,
+    "timeToSolve": "11",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/71c9-still-life-advocado-37-pieces-no-spoon.json"
   },
   {
     "id": "d1ecf582-baef-40d1-958e-204de3acfb90",
