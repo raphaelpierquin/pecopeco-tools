@@ -111,7 +111,7 @@ _lookup() {
 
 _whatshallIdowith() {
   file=$1
-  if [[ -f file ]] ; then
+  if [[ -f $file ]] ; then
     id=$(jq '.id' $file | sed 's/"//g' )
   else
     id=$(basename $file .json)
