@@ -99,6 +99,17 @@
     "href": "cuts/30b6-tiny-cabin-16-pieces-the-pizza-way.json"
   },
   {
+    "id": "b500-pancake-36-pieces-sticky-edges",
+    "modelId": "pancake",
+    "name": "Sticky edges",
+    "author": "Raphaël",
+    "pieceCount": 36,
+    "timeToSolve": "13",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/b500-pancake-36-pieces-sticky-edges.json"
+  },
+  {
     "id": "the-wizards-enigmatic-cabin-laurents-cut",
     "modelId": "the-wizards-enigmatic-cabin",
     "name": "Laurent's cut",
