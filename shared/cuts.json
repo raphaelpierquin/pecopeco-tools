@@ -150,6 +150,7 @@
     "piecesPerColumn": 4,
     "author": "Raphaël",
     "timeToSolve": "7",
+    "1": "2",
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
@@ -172,6 +173,17 @@
     "author": "Raphaël",
     "timeToSolve": "45",
     "href": "cuts/b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles.json"
+  },
+  {
+    "id": "e24d-sushi-bar-36-pieces-fresh-samples",
+    "modelId": "sushi-bar",
+    "name": "Fresh samples",
+    "author": "Raphaël",
+    "pieceCount": 36,
+    "timeToSolve": "12",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/e24d-sushi-bar-36-pieces-fresh-samples.json"
   },
   {
     "id": "efdb723d-4e12-40e3-9021-3c925d63a6f3",
