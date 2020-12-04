@@ -10,7 +10,6 @@ DIR_TO_STAGE=(cuts slicer-timer)
 KEEPDB=$STAGED_CUTS/keep.txt
 
 usage() {
-
   name=$(basename $0)
   echo "usage : ${name} [clean|export|remove|list|push|pull] [arg]"
   echo "        ${name} clean : remove from headset any cut not listed in $KEEPDB"
@@ -125,6 +124,15 @@ _whatshallIdowith() {
   echo drop
 }
 
+_checkNumberOfArgs() {
+  target=$1
+  if [[ $(($# -2)) -lt $target ]] ; then
+    echo "Not enough arguments"
+    usage
+    exit -1
+  fi
+}
+
 list() {
   dir=$1
   for id in $(_all_cut_ids)
@@ -161,9 +169,11 @@ case "$1" in
     list $2;
     ;;
   lookup)
+    _checkNumberOfArgs 1
     _lookup $2
     ;;
   set)
+    _checkNumberOfArgs 3
     set_property $2 "$3" $4
     ;;
   *)
