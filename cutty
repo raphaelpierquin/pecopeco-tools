@@ -126,7 +126,7 @@ _whatshallIdowith() {
 
 _checkNumberOfArgs() {
   target=$1
-  if [[ $(($# -2)) -lt $target ]] ; then
+  if [[ $(($#-2)) -lt $target ]] ; then
     echo "Not enough arguments"
     usage
     exit -1
@@ -169,11 +169,11 @@ case "$1" in
     list $2;
     ;;
   lookup)
-    _checkNumberOfArgs 1
+    _checkNumberOfArgs 1 $*
     _lookup $2
     ;;
   set)
-    _checkNumberOfArgs 3
+    _checkNumberOfArgs 3 $*
     set_property $2 "$3" $4
     ;;
   *)
