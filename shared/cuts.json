@@ -22,16 +22,6 @@
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
-    "id": "408eda0c-8015-4a0f-aec7-b5d92b1bb140",
-    "modelId": "shark-cage",
-    "name": "2020-11-20 00:08:00",
-    "pieceCount": 16,
-    "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
-    "author": "Laurent",
-    "href": "cuts/408eda0c-8015-4a0f-aec7-b5d92b1bb140.json"
-  },
-  {
     "id": "684f-strawberry-jumbo-19-pieces-aussitot-fraise",
     "modelId": "strawberry-jumbo",
     "name": "Aussitôt fraise",
@@ -164,16 +154,6 @@
     "href": "cuts/cf7e-coffee-and-donuts-85-pieces-far-fetched-clues.json"
   },
   {
-    "id": "d1ecf582-baef-40d1-958e-204de3acfb90",
-    "modelId": "freshfood-burger-and-fries",
-    "name": "2020-11-20 00:13:01",
-    "pieceCount": 19,
-    "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
-    "author": "Laurent",
-    "href": "cuts/d1ecf582-baef-40d1-958e-204de3acfb90.json"
-  },
-  {
     "id": "d29e-melonpop-80-pieces-drops-and-locks",
     "modelId": "melonpop",
     "name": "Drops and locks",
@@ -207,16 +187,6 @@
     "href": "cuts/e7d5-shark-cage-47-pieces-Broken-jaws.json"
   },
   {
-    "id": "efdb723d-4e12-40e3-9021-3c925d63a6f3",
-    "modelId": "sushi-bar",
-    "name": "2020-11-20 00:11:45",
-    "pieceCount": 5,
-    "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
-    "author": "Laurent",
-    "href": "cuts/efdb723d-4e12-40e3-9021-3c925d63a6f3.json"
-  },
-  {
     "id": "fafc-egg-in-a-hiole-17-pieces-humpty_shapes",
     "modelId": "egg-in-a-hole",
     "name": "Humpty shapes",
@@ -226,16 +196,6 @@
     "author": "Raphaël",
     "timeToSolve": "9",
     "href": "cuts/fafc-egg-in-a-hiole-17-pieces-humpty_shapes.json"
-  },
-  {
-    "id": "fb020192-df94-4535-aa23-faf53de802fd",
-    "modelId": "melonpop",
-    "name": "2020-11-20 00:14:18",
-    "pieceCount": 17,
-    "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
-    "author": "Laurent",
-    "href": "cuts/fb020192-df94-4535-aa23-faf53de802fd.json"
   },
   {
     "id": "lightning-cuts",
