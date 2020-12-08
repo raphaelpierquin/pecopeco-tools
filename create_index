@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 (
   cd shared
-  find cuts -name \*.json |
+  find cuts -name \*.json | sort |
     xargs jq 'del(.slicers) | .href = input_filename' |
     jq --slurp .
 ) > shared/cuts.json
