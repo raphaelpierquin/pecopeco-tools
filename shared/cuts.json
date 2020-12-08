@@ -237,6 +237,20 @@
     "href": "cuts/fb020192-df94-4535-aa23-faf53de802fd.json"
   },
   {
+<<<<<<< HEAD
+=======
+    "id": "lightning-cuts",
+    "modelId": "thor-and-the-midgard-serpent",
+    "name": "2020-12-08 08:52:53",
+    "pieceCount": 21,
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "author": "Laurent",
+    "timeToSolve": "20",
+    "href": "cuts/lightning-cuts.json"
+  },
+  {
+>>>>>>> Ajoute une découpe (Thor)
     "id": "the-wizards-enigmatic-cabin-laurents-cut",
     "modelId": "the-wizards-enigmatic-cabin",
     "name": "Laurent's cut",
