@@ -132,6 +132,17 @@
     "href": "cuts/b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles.json"
   },
   {
+    "id": "c3d7-coho-chip-cookie-17-pieces-cross-pads",
+    "modelId": "coho-chip-cookie",
+    "name": "Cross pads",
+    "author": "Raphaël",
+    "pieceCount": 28,
+    "timeToSolve": "7",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/c3d7-coho-chip-cookie-17-pieces-cross-pads.json"
+  },
+  {
     "id": "cf46-littlest-tokyo-60-pieces-Coarse-and-delicate",
     "modelId": "littlest-tokyo",
     "name": "Coarse and delicate",
