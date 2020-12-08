@@ -104,6 +104,7 @@
     "pieceCount": 36,
     "pieceSpacing": 0.5,
     "piecesPerColumn": 4,
+    "author": "Laurent",
     "timeToSolve": "17",
     "href": "cuts/avocado-no-toast.json"
   },
