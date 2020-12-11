@@ -44,6 +44,17 @@
     "href": "cuts/71c9-still-life-advocado-37-pieces-no-spoon.json"
   },
   {
+    "id": "71da-lighthouse-in-the-sky-65-pieces-by-a-hull-flake",
+    "modelId": "lighthouse-in-the-sky",
+    "name": "By a hull flake",
+    "author": "",
+    "pieceCount": 65,
+    "timeToSolve": "20",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/71da-lighthouse-in-the-sky-65-pieces-by-a-hull-flake.json"
+  },
+  {
     "id": "75350d94-f869-4698-af7d-c5a96285d3e0",
     "modelId": "waffling-on",
     "name": "2020-11-19 23:35:10",
