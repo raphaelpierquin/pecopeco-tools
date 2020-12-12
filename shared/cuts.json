@@ -22,6 +22,17 @@
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
+    "id": "5fad-thor-and-the-midgard-serpent-46-pieces-cut-scenes",
+    "modelId": "thor-and-the-midgard-serpent",
+    "name": "Cut scenes",
+    "author": "Raphaël",
+    "pieceCount": 46,
+    "timeToSolve": "17",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/5fad-thor-and-the-midgard-serpent-46-pieces-cut-scenes.json"
+  },
+  {
     "id": "684f-strawberry-jumbo-19-pieces-aussitot-fraise",
     "modelId": "strawberry-jumbo",
     "name": "Aussitôt fraise",
