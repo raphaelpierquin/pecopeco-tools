@@ -66,6 +66,17 @@
     "href": "cuts/71da-lighthouse-in-the-sky-65-pieces-by-a-hull-flake.json"
   },
   {
+    "id": "720c-icecream-22-pieces-crusty-rings",
+    "modelId": "icecream",
+    "name": "Crusty rings",
+    "author": "Raphaël",
+    "pieceCount": 22,
+    "timeToSolve": "5",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/720c-icecream-22-pieces-crusty-rings.json"
+  },
+  {
     "id": "75350d94-f869-4698-af7d-c5a96285d3e0",
     "modelId": "waffling-on",
     "name": "2020-11-19 23:35:10",
