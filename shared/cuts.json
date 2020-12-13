@@ -88,6 +88,17 @@
     "href": "cuts/75350d94-f869-4698-af7d-c5a96285d3e0.json"
   },
   {
+    "id": "775d-greek-temple-31-pieces-building-blocks",
+    "modelId": "greek-temple",
+    "name": "Building blocks",
+    "author": "Raphaël",
+    "pieceCount": 31,
+    "timeToSolve": "8",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/775d-greek-temple-31-pieces-building-blocks.json"
+  },
+  {
     "id": "7d72-freshfood-burger-and-fries-84-pieces-small-bites",
     "modelId": "freshfood-burger-and-fries",
     "name": "Small bites",
