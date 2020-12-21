@@ -154,6 +154,18 @@
     "href": "cuts/avocado-no-toast.json"
   },
   {
+    "id": "b3de-tree-house-45-pieces-knotty-or-fluffy",
+    "modelId": "tree-house",
+    "name": "Knotty or fluffy ?",
+    "author": "Raphaël",
+    "pieceCount": 46,
+    "timeToSolve": "25",
+    "cutDataUrl": "",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 4,
+    "href": "cuts/b3de-tree-house-45-pieces-knotty-or-fluffy.json"
+  },
+  {
     "id": "b500-pancake-36-pieces-sticky-edges",
     "modelId": "pancake",
     "name": "Sticky edges",
