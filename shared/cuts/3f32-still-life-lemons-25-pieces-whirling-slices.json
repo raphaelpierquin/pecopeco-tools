@@ -4,7 +4,7 @@
   "name": "Whirling slices",
   "pieceCount": 25,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "plan_0",

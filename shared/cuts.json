@@ -5,7 +5,7 @@
     "name": "The pizza way",
     "pieceCount": 16,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "4",
     "href": "cuts/30b6-tiny-cabin-16-pieces-the-pizza-way.json"
@@ -16,7 +16,7 @@
     "name": "Whirling slices",
     "pieceCount": 25,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "7",
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
@@ -29,7 +29,7 @@
     "pieceCount": 75,
     "timeToSolve": "29",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/5f12-3-seconds-of-vacations-75-pieces-windblown.json"
   },
   {
@@ -40,7 +40,7 @@
     "pieceCount": 46,
     "timeToSolve": "17",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/5fad-thor-and-the-midgard-serpent-46-pieces-cut-scenes.json"
   },
   {
@@ -49,7 +49,7 @@
     "name": "Aussitôt fraise",
     "pieceCount": 19,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Laurent",
     "timeToSolve": "6",
     "href": "cuts/684f-strawberry-jumbo-19-pieces-aussitot-fraise.json"
@@ -62,7 +62,7 @@
     "pieceCount": 37,
     "timeToSolve": "11",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/71c9-still-life-advocado-37-pieces-no-spoon.json"
   },
   {
@@ -73,7 +73,7 @@
     "pieceCount": 65,
     "timeToSolve": "20",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/71da-lighthouse-in-the-sky-65-pieces-by-a-hull-flake.json"
   },
   {
@@ -84,7 +84,7 @@
     "pieceCount": 22,
     "timeToSolve": "5",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/720c-icecream-22-pieces-crusty-rings.json"
   },
   {
@@ -93,7 +93,7 @@
     "name": "2020-11-19 23:35:10",
     "pieceCount": 50,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Laurent",
     "timeToSolve": "19",
     "href": "cuts/75350d94-f869-4698-af7d-c5a96285d3e0.json"
@@ -106,7 +106,7 @@
     "pieceCount": 31,
     "timeToSolve": "8",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/775d-greek-temple-31-pieces-building-blocks.json"
   },
   {
@@ -115,7 +115,7 @@
     "name": "Small bites",
     "pieceCount": 84,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "29",
     "href": "cuts/7d72-freshfood-burger-and-fries-84-pieces-small-bites.json"
@@ -126,7 +126,7 @@
     "name": "Leaps",
     "pieceCount": "39",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "12",
     "href": "cuts/96e8-missing-camera-39-pieces-Leaps.json"
@@ -137,7 +137,7 @@
     "name": "Melting pot",
     "pieceCount": 63,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "timeToSolve": "19",
     "author": "Raphaël",
     "href": "cuts/a950-waffling-on-63-pieces-melting-pot.json"
@@ -148,7 +148,7 @@
     "name": "No toast",
     "pieceCount": 36,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Laurent",
     "timeToSolve": "17",
     "href": "cuts/avocado-no-toast.json"
@@ -162,7 +162,7 @@
     "timeToSolve": "25",
     "cutDataUrl": "",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/b3de-tree-house-45-pieces-knotty-or-fluffy.json"
   },
   {
@@ -173,7 +173,7 @@
     "pieceCount": 36,
     "timeToSolve": "13",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/b500-pancake-36-pieces-sticky-edges.json"
   },
   {
@@ -182,7 +182,7 @@
     "name": "Cluttered slices",
     "pieceCount": "10",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "5",
     "href": "cuts/b6cd-treehouse-10-pieces-Cluttered-slices.json"
@@ -193,7 +193,7 @@
     "name": "Giggly bubbles",
     "pieceCount": 80,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "45",
     "href": "cuts/b9b0-jiggly-watermelon-jello-80-pieces-giggly-bubbles.json"
@@ -206,7 +206,7 @@
     "pieceCount": 28,
     "timeToSolve": "7",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/c3d7-coho-chip-cookie-17-pieces-cross-pads.json"
   },
   {
@@ -214,7 +214,7 @@
     "modelId": "littlest-tokyo",
     "name": "Coarse and delicate",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "pieceCount": "60",
     "author": "Raphaël",
     "timeToSolve": "15",
@@ -226,7 +226,7 @@
     "name": "Far fetched clues",
     "pieceCount": 85,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "33",
     "href": "cuts/cf7e-coffee-and-donuts-85-pieces-far-fetched-clues.json"
@@ -239,7 +239,7 @@
     "pieceCount": 80,
     "timeToSolve": "35",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/d29e-melonpop-80-pieces-drops-and-locks.json"
   },
   {
@@ -250,7 +250,7 @@
     "pieceCount": 36,
     "timeToSolve": "12",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "href": "cuts/e24d-sushi-bar-36-pieces-fresh-samples.json"
   },
   {
@@ -259,7 +259,7 @@
     "name": "Broken jaws",
     "pieceCount": "47",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "12",
     "href": "cuts/e7d5-shark-cage-47-pieces-Broken-jaws.json"
@@ -270,7 +270,7 @@
     "name": "Humpty shapes",
     "pieceCount": 31,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Raphaël",
     "timeToSolve": "9",
     "href": "cuts/fafc-egg-in-a-hiole-17-pieces-humpty_shapes.json"
@@ -281,7 +281,7 @@
     "name": "Lightning cuts",
     "pieceCount": 21,
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Laurent",
     "timeToSolve": "20",
     "href": "cuts/lightning-cuts.json"
@@ -292,7 +292,7 @@
     "name": "Laurent's cut",
     "pieceCount": "32",
     "pieceSpacing": 0.5,
-    "piecesPerColumn": 4,
+    "piecesPerColumn": 3,
     "author": "Laurent",
     "timeToSolve": "11",
     "href": "cuts/the-wizards-enigmatic-cabin-laurents-cut.json"

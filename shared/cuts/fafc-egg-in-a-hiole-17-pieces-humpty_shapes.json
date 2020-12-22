@@ -4,7 +4,7 @@
   "name": "Humpty shapes",
   "pieceCount": 31,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "bignou_0",

@@ -6,7 +6,7 @@
   "pieceCount": 28,
   "timeToSolve": "7",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "cross_0",

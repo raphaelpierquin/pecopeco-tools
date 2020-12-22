@@ -4,7 +4,7 @@
   "name": "Aussitôt fraise",
   "pieceCount": 19,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "ellipsoid_0",

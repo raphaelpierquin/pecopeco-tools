@@ -4,7 +4,7 @@
   "name": "Melting pot",
   "pieceCount": 63,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "quad-sphere_0",

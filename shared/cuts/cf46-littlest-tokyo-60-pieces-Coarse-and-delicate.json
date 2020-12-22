@@ -3,7 +3,7 @@
   "modelId": "littlest-tokyo",
   "name": "Coarse and delicate",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "sphere",

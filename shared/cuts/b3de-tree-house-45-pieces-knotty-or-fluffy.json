@@ -7,7 +7,7 @@
   "timeToSolve": "25",
   "cutDataUrl": "",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "barre_0",

@@ -4,7 +4,7 @@
   "name": "Leaps",
   "pieceCount": "39",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "plaque_0",

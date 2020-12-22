@@ -6,7 +6,7 @@
   "pieceCount": 22,
   "timeToSolve": "5",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "tri-sphere_0",

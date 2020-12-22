@@ -4,7 +4,7 @@
   "name": "Lightning cuts",
   "pieceCount": 21,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "custom-slicer_0",

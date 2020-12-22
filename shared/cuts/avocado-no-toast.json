@@ -4,7 +4,7 @@
   "name": "No toast",
   "pieceCount": 36,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "sphere_0",

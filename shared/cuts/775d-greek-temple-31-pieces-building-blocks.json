@@ -6,7 +6,7 @@
   "pieceCount": 31,
   "timeToSolve": "8",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "ellipsoid_0",

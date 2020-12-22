@@ -4,7 +4,7 @@
   "name": "Broken jaws",
   "pieceCount": "47",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "sphere_0",

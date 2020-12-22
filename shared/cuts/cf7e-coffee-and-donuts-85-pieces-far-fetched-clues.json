@@ -4,7 +4,7 @@
   "name": "Far fetched clues",
   "pieceCount": 85,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "upward-corner_0",

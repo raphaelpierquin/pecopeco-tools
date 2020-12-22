@@ -6,7 +6,7 @@
   "pieceCount": 80,
   "timeToSolve": "35",
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "equerronde_0",

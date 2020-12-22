@@ -4,7 +4,7 @@
   "name": "2020-11-19 23:35:10",
   "pieceCount": 50,
   "pieceSpacing": 0.5,
-  "piecesPerColumn": 4,
+  "piecesPerColumn": 3,
   "slicers": [
     {
       "name": "sphere_0",
