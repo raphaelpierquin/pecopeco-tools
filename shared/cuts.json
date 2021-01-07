@@ -22,6 +22,18 @@
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
+    "id": "408cb-low-poly-winter-scene-30-pieces",
+    "modelId": "low-poly-winter-scene",
+    "name": "Cut at the top",
+    "author": "Julien",
+    "pieceCount": 30,
+    "timeToSolve": 12,
+    "cutDataUrl": "",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 3,
+    "href": "cuts/408cb-low-poly-winter-scene-30-pieces.json"
+  },
+  {
     "id": "5f12-3-seconds-of-vacations-75-pieces-windblown",
     "modelId": "3-seconds-of-vacations",
     "name": "Windblown",
