@@ -255,6 +255,18 @@
     "href": "cuts/d29e-melonpop-80-pieces-drops-and-locks.json"
   },
   {
+    "id": "d466a-skyhome-8-pieces",
+    "modelId": "skyhome",
+    "name": "Big blocks",
+    "author": "Julien",
+    "pieceCount": 8,
+    "timeToSolve": 4,
+    "cutDataUrl": "",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 3,
+    "href": "cuts/d466a-skyhome-8-pieces.json"
+  },
+  {
     "id": "e24d-sushi-bar-36-pieces-fresh-samples",
     "modelId": "sushi-bar",
     "name": "Fresh samples",
