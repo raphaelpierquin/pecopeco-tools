@@ -22,16 +22,16 @@
     "href": "cuts/3f32-still-life-lemons-25-pieces-whirling-slices.json"
   },
   {
-    "id": "408cb-low-poly-winter-scene-30-pieces",
+    "id": "408cb-low-poly-winter-scene-31-pieces",
     "modelId": "low-poly-winter-scene",
     "name": "Cut at the top",
     "author": "Julien",
-    "pieceCount": 30,
+    "pieceCount": 31,
     "timeToSolve": 12,
     "cutDataUrl": "",
     "pieceSpacing": 0.5,
     "piecesPerColumn": 3,
-    "href": "cuts/408cb-low-poly-winter-scene-30-pieces.json"
+    "href": "cuts/408cb-low-poly-winter-scene-31-pieces.json"
   },
   {
     "id": "5f12-3-seconds-of-vacations-75-pieces-windblown",
@@ -253,6 +253,18 @@
     "pieceSpacing": 0.5,
     "piecesPerColumn": 3,
     "href": "cuts/d29e-melonpop-80-pieces-drops-and-locks.json"
+  },
+  {
+    "id": "d466a-skyhome-8-pieces",
+    "modelId": "skyhome",
+    "name": "Big blocks",
+    "author": "Julien",
+    "pieceCount": 8,
+    "timeToSolve": 4,
+    "cutDataUrl": "",
+    "pieceSpacing": 0.5,
+    "piecesPerColumn": 3,
+    "href": "cuts/d466a-skyhome-8-pieces.json"
   },
   {
     "id": "e24d-sushi-bar-36-pieces-fresh-samples",
